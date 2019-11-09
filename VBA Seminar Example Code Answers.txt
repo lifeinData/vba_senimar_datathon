@@ -1,0 +1,194 @@
+Sub no_negative_payments()
+
+For i = 2 To Cells(Rows.Count, 5).End(xlUp).Row
+
+    If Cells(i, 5) < 0 Then
+        Cells(i, 5) = 0
+    End If
+    
+Next i
+    
+
+End Sub
+
+
+Sub recode_late_payments()
+
+For i = 2 To Cells(Rows.Count, 4).End(xlUp).Row
+
+    If Cells(i, 4) = 0 Then
+        Cells(i, 4) = "n"
+    
+    Else
+        Cells(i, 4) = "y"
+        
+    End If
+    
+Next i
+
+End Sub
+
+
+Sub correct_late_payment()
+
+For i = 2 To Cells(Rows.Count, 5).End(xlUp).Row
+
+    If Cells(i, 4) = "n" And Cells(i, 5) > 0 Then
+        Cells(i, 5) = 0
+    End If
+    
+Next i
+    
+
+End Sub
+
+
+Sub mark_fishy_rows()
+Cells(1, 6) = "Is the row questionable?"
+For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+
+    If Cells(i, 5) < 0 Or Cells(i, 4) = 0 And Cells(i, 5) > 0 Then
+        Cells(i, 6) = "y"
+    Else
+        Cells(i, 6) = "n"
+    End If
+    
+Next i
+    
+
+End Sub
+
+
+Sub color_fishy_rows()
+
+For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+
+     If Cells(i, 5) < 0 Or Cells(i, 4) = 0 And Cells(i, 5) > 0 Then
+     
+        Range(Cells(i, 1), Cells(i, 6)).Select
+        With Selection.Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = 5296274
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+        
+    End If
+    
+Next i
+    
+End Sub
+
+
+Sub border_fishy_rows()
+
+For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+
+     If Cells(i, 5) < 0 Or Cells(i, 4) = 0 And Cells(i, 5) > 0 Then
+     
+        Range(Cells(i, 1), Cells(i, 6)).Select
+        Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+        Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+        With Selection.Borders(xlEdgeLeft)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With Selection.Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With Selection.Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With Selection.Borders(xlEdgeRight)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        Selection.Borders(xlInsideVertical).LineStyle = xlNone
+        Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+        
+    End If
+    
+Next i
+    
+End Sub
+
+
+Sub adding_numbers_together()
+
+Dim numberA As Integer
+Dim numberB As Integer
+Dim sumOfNumbers As Integer
+
+numberA = 2
+numberB = 5
+sumOfNumbers = numberA + numberB
+
+Debug.Print sumOfNumbers
+
+End Sub
+
+
+Sub if_example()
+
+Dim numberA As Integer
+Dim numberB As Integer
+Dim sumOfNumbers As Integer
+
+numberA = 9
+numberB = -1
+sumOfNumbers = numberA + numberB
+
+If numberA > 9 Then
+    Debug.Print "The sum will be greater than 8. The sum is: " & sumOfNumbers
+
+ElseIf numberA <= 9 And numberA > 0 Then
+    Debug.Print "The sum will be less than 9 but more than 0. The sum is: " & sumOfNumbers
+    
+'notice I don't put any conditions here because it's a catchall
+Else
+    Debug.Print "The sum here will be less than or equal to 0. The sum is: " & sumOfNumbers
+
+End If
+
+End Sub
+
+
+Sub loop_example()
+
+Dim sumOfNumbers As Integer
+
+sumOfNumbers = 0
+
+For i = 0 To 100
+    sumOfNumbers = sumOfNumbers + i
+    Debug.Print "we are on iteration: " & i
+Next i
+
+Debug.Print "The total sum is: " & sumOfNumbers
+
+End Sub
+
+
+Sub xlup_example()
+
+Debug.Print "This is the last row # with data: " & Cells(Rows.Count, 1).End(xlUp).Row
+
+End Sub
+
+
+Sub xlleft_example()
+
+Debug.Print "This is the last column # with data: " & Cells(1, Columns.Count).End(xlToLeft).Column
+
+End Sub
